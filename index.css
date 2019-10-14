@@ -9,3 +9,9 @@ h1 {
   color: white;
   font-size: 48px;
 }
+.historyBox{
+  width: 20vw;
+  height: 20vh;
+  background-color: white;
+  overflow: scroll;
+}

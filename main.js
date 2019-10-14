@@ -13,10 +13,12 @@ const getRandomNum = () => {
 // if (red*0.299 + green*0.587 + blue*0.114) > 186 use #000000 else use #ffffff
 let repeat = true;
 const currentColor = document.getElementById('currentColor');
+const historyArray = [];
 const timeout = () => {
   if (repeat === true) {
     const changeColor = setTimeout(() => {
       if (repeat === true) {
+        prevHistoryArrayLength = historyArray.length;
         const red = getRandomNum();
         const green = getRandomNum();
         const blue = getRandomNum();
@@ -29,6 +31,12 @@ const timeout = () => {
         } else {
           document.getElementById('currentColor').style.color = '#ffffff';
         }
+        historyArray.push({
+          red,
+          green,
+          blue
+        })
+        document.getElementById('historyBox').innerHTML = `<ul> ${historyArray.map((color) => `<li>Red: ${color.red}, Green: ${color.green}, Blue: ${color.blue}`)} </ul>`
         timeout()
       }
 
