@@ -14,7 +14,7 @@ const getRandomNum = () => {
 let repeat = true;
 const currentColor = document.getElementById('currentColor');
 const historyArray = [];
-test = (e) => {
+historyItemOnClick = (e) => {
   // console.log(e.id);
   const targetContent = document.getElementById(`${e.id}`).textContent;
   const targetArr = targetContent.split(',')
@@ -26,6 +26,14 @@ test = (e) => {
     green,
     blue
   })
+  changeBgColor(red, green, blue)
+}
+changeBgColor = (red, green, blue) => {
+  if (repeat === true){
+    repeat = false
+  }
+  document.body.style.backgroundColor = `rgb(${red}, ${green}, ${blue})`;
+  currentColor.textContent = `Red: ${red}, Green: ${green}, Blue: ${blue}`
 }
 const timeout = () => {
   if (repeat === true) {
@@ -49,7 +57,7 @@ const timeout = () => {
           green,
           blue
         })
-        document.getElementById('historyBox').innerHTML = `<ul> ${historyArray.map((color, index) => `<li id='${index}' onclick=test(this)>Red: ${color.red}, Green: ${color.green}, Blue: ${color.blue}`)} </ul>`
+        document.getElementById('historyBox').innerHTML = `<ul> ${historyArray.map((color, index) => `<li id='${index}' onclick=historyItemOnClick(this)>Red: ${color.red}, Green: ${color.green}, Blue: ${color.blue}`)} </ul>`
         timeout()
       }
 
