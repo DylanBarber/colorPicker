@@ -1,81 +1,54 @@
+//Repeat boolean for checking if a new color should be generated
+let repeat = true;
+
+//Create array for history tracking
+let historyArray = [];
+
+//DOM Elements
+const colorTitle = document.getElementById('colorTitle');
+const historyBox = document.getElementById('historyBox');
+const startStopButton = document.getElementById('startStop');
+const clearHistory = document.getElementById('clearHistory');
+
+//Function to obtain random number from 0-255 for RGB values
 const getRandomNum = () => {
   return Math.round(Math.random() * 255)
 }
-// `rgb(${red}, ${green}, ${blue})`
-// const timeout = () => {
-//   setTimeout(() => {
-//     console.log('test');
-//     timeout()
-//   }, 1000)
 
-// }
-// timeout()
-// if (red*0.299 + green*0.587 + blue*0.114) > 186 use #000000 else use #ffffff
-let repeat = true;
-const currentColor = document.getElementById('currentColor');
-let historyArray = [];
-historyItemOnClick = (e) => {
+//Function that obtains the color value of a clicked item in color list
+colorItemOnClick = (e) => {
   // console.log(e.id);
   const targetContent = document.getElementById(`${e.id}`).textContent;
   const targetArr = targetContent.split(',')
   const red = parseInt(targetArr[0].split(' ')[1]);
   const green = parseInt(targetArr[1].split(' ')[2]);
   const blue = parseInt(targetArr[2].split(' ')[2]);
-  console.log({
-    red,
-    green,
-    blue
-  })
   changeBgColor(red, green, blue)
 }
+
+//Function that changes the background color (Only used for colorItemOnClick because repeat is set to false)
 changeBgColor = (red, green, blue) => {
   if (repeat === true){
     repeat = false
   }
   document.body.style.backgroundColor = `rgb(${red}, ${green}, ${blue})`;
-  currentColor.textContent = `Red: ${red}, Green: ${green}, Blue: ${blue}`
+  colorTitle.textContent = `Red: ${red}, Green: ${green}, Blue: ${blue}`
 }
 
-document.getElementById('clearHistory').addEventListener('click', () => {
-  document.getElementById('historyBox').innerHTML = '';
-  historyArray = [];
-})
-
-const timeout = () => {
-  if (repeat === true) {
-    const changeColor = setTimeout(() => {
-      if (repeat === true) {
-        prevHistoryArrayLength = historyArray.length;
-        const red = getRandomNum();
-        const green = getRandomNum();
-        const blue = getRandomNum();
-        document.body.style.backgroundColor = `rgb(${red}, ${green}, ${blue})`;
-        currentColor.style.color = `rgb(${red}, ${green}, ${blue})`
-        currentColor.textContent = `rgb(${red}, ${green}, ${blue})`
-
-        if (red * 0.299 + green * 0.587 + blue * 0.114 > 186) {
-          document.getElementById('currentColor').style.color = '#000000';
-        } else {
-          document.getElementById('currentColor').style.color = '#ffffff';
-        }
-        historyArray.push({
-          red,
-          green,
-          blue
-        })
-        document.getElementById('historyBox').innerHTML = `<ul> ${historyArray.map((color, index) => `<li id='${index}' onclick=historyItemOnClick(this)>Red: ${color.red}, Green: ${color.green}, Blue: ${color.blue}`)} </ul>`
-        timeout()
-      }
-
-    }, 1500)
+//Function that changes the color title to either black or white based on the current background color (Passed in color)
+changeColorTitleColor = (red, green, blue) => {
+  if (red * 0.299 + green * 0.587 + blue * 0.114 > 186) {
+    colorTitle.style.color = '#000000';
+  } else {
+    colorTitle.style.color = '#ffffff';
   }
-
 }
 
-const startStopButton = document.getElementById('startStop');
+//Event Listeners
+
+//For starting / stopping the color generation loop
 startStopButton.addEventListener('click', () => {
   if (!repeat) {
-    console.log('test')
     repeat = !repeat
     timeout();
     return;
@@ -83,4 +56,46 @@ startStopButton.addEventListener('click', () => {
   repeat = !repeat
 
 })
+
+//For clearing the history box and historyArray
+clearHistory.addEventListener('click', () => {
+  historyBox.innerHTML = '';
+  historyArray = [];
+})
+
+//Main loop that will loop over newly generated colors
+const timeout = () => {
+    const changeColor = setTimeout(() => {
+      if (repeat === true) {
+        //Generate new color values
+        const red = getRandomNum();
+        const green = getRandomNum();
+        const blue = getRandomNum();
+
+        //Set background color based on generated values
+        document.body.style.backgroundColor = `rgb(${red}, ${green}, ${blue})`;
+
+        //Change the colorTitle with changeColorTitleColor function
+        changeColorTitleColor(red, green, blue);
+
+        //Update the colorTitle with the current background color
+        colorTitle.textContent = `rgb(${red}, ${green}, ${blue})`;
+
+        //Push current color to the history array
+        historyArray.push({
+          red,
+          green,
+          blue
+        })
+        
+        //Map over all colors in the history array and display them in the historyBox
+        historyBox.innerHTML = `<ul> ${historyArray.map((color, index) => `<li id='${index}' onclick=colorItemOnClick(this)>Red: ${color.red}, Green: ${color.green}, Blue: ${color.blue}`)} </ul>`
+
+        //Call timeout for for looping
+        timeout()
+      }
+    }, 1500)
+}
+
+//Run timeout for the first time
 timeout();
