@@ -13,7 +13,7 @@ const getRandomNum = () => {
 // if (red*0.299 + green*0.587 + blue*0.114) > 186 use #000000 else use #ffffff
 let repeat = true;
 const currentColor = document.getElementById('currentColor');
-const historyArray = [];
+let historyArray = [];
 historyItemOnClick = (e) => {
   // console.log(e.id);
   const targetContent = document.getElementById(`${e.id}`).textContent;
@@ -35,6 +35,12 @@ changeBgColor = (red, green, blue) => {
   document.body.style.backgroundColor = `rgb(${red}, ${green}, ${blue})`;
   currentColor.textContent = `Red: ${red}, Green: ${green}, Blue: ${blue}`
 }
+
+document.getElementById('clearHistory').addEventListener('click', () => {
+  document.getElementById('historyBox').innerHTML = '';
+  historyArray = [];
+})
+
 const timeout = () => {
   if (repeat === true) {
     const changeColor = setTimeout(() => {
