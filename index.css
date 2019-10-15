@@ -47,7 +47,7 @@ button {
 /* History and Favorites Box */
 
 .historyBox, .favoritesBox {
-  width: 100%;
+  width: 97%;
   height: 20vh;
   background-color: white;
   overflow: scroll;
