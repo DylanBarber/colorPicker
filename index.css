@@ -6,6 +6,8 @@ body {
   align-items: center;
   height: 100vh;
   flex-direction: column;
+  margin: 0px;
+  padding: 0px;
 }
 
 button:hover {
@@ -31,6 +33,7 @@ button {
 #colorTitle {
   color: white;
   font-size: 48px;
+  margin: 10px;
 }
 
 /* Title that displays the current color */
