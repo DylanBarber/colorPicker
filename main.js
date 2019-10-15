@@ -4,9 +4,14 @@ let repeat = true;
 //Create array for history tracking
 let historyArray = [];
 
-//Testing
+//Create array for favorites
+let favoritesArray = [];
+
+//prevTarget for highlighting rows in historyBox when clicked
 let prevTarget = null;
 
+//for the current highlighted intem in historyBox
+let currentItem = null;
 
 //DOM Elements
 const colorTitle = document.getElementById('colorTitle');
@@ -28,6 +33,7 @@ colorItemOnClick = (e) => {
   if (prevTarget !== null) {
     prevTarget.classList.remove('highlightedItem');
   }
+  currentItem = e;
   const targetContent = document.getElementById(`${e.id}`).textContent;
   const targetArr = targetContent.split(',')
   const red = parseInt(targetArr[0].split(' ')[1]);
@@ -75,6 +81,17 @@ clearHistoryButton.addEventListener('click', () => {
   historyArray = [];
 })
 
+//For adding the highlighted color from history to favorites
+addToFavoritesButton.addEventListener('click', () => {
+  // favoritesArray.push(currentItem);
+  const targetArr = currentItem.textContent.split(',')
+  const red = parseInt(targetArr[0].split(' ')[1]);
+  const green = parseInt(targetArr[1].split(' ')[2]);
+  const blue = parseInt(targetArr[2].split(' ')[2]);
+  console.log({red, green, blue})
+});
+
+
 //Main loop that will loop over newly generated colors
 const timeout = () => {
   const changeColor = setTimeout(() => {
@@ -102,6 +119,9 @@ const timeout = () => {
 
       //Map over all colors in the history array and display them in the historyBox
       historyBox.innerHTML = `<ul> ${historyArray.map((color, index) => `<li id='${index}' onclick=colorItemOnClick(this)>Red: ${color.red}, Green: ${color.green}, Blue: ${color.blue}`)} </ul>`
+
+      //Map over all colors in the favorites array and display them in the favoritesBox
+      favoritesBox.innerHTML = `<ul> ${favoritesArray.map((color, index) => `<li id='${index}' onclick=colorItemOnClick(this)>Red: ${color.red}, Green: ${color.green}, Blue: ${color.blue}`)} </ul>`
 
       //Make sure buttons are displayed
       startStopButton.classList.remove('invisible');
