@@ -8,7 +8,10 @@ let historyArray = [];
 const colorTitle = document.getElementById('colorTitle');
 const historyBox = document.getElementById('historyBox');
 const startStopButton = document.getElementById('startStop');
-const clearHistory = document.getElementById('clearHistory');
+const clearHistoryButton = document.getElementById('clearHistoryButton');
+const addToFavoritesButton = document.getElementById('addToFavoritesButton');
+const clearFavoritesButton = document.getElementById('clearFavoritesButton');
+const addCurrentToFavoritesButton = document.getElementById('addCurrentToFavoritesButton');
 
 //Function to obtain random number from 0-255 for RGB values
 const getRandomNum = () => {
@@ -17,7 +20,6 @@ const getRandomNum = () => {
 
 //Function that obtains the color value of a clicked item in color list
 colorItemOnClick = (e) => {
-  // console.log(e.id);
   const targetContent = document.getElementById(`${e.id}`).textContent;
   const targetArr = targetContent.split(',')
   const red = parseInt(targetArr[0].split(' ')[1]);
@@ -58,7 +60,7 @@ startStopButton.addEventListener('click', () => {
 })
 
 //For clearing the history box and historyArray
-clearHistory.addEventListener('click', () => {
+clearHistoryButton.addEventListener('click', () => {
   historyBox.innerHTML = '';
   historyArray = [];
 })
@@ -79,7 +81,7 @@ const timeout = () => {
         changeColorTitleColor(red, green, blue);
 
         //Update the colorTitle with the current background color
-        colorTitle.textContent = `rgb(${red}, ${green}, ${blue})`;
+        colorTitle.textContent = `Red: ${red}, Green: ${green}, Blue: ${blue}`;
 
         //Push current color to the history array
         historyArray.push({
@@ -90,6 +92,13 @@ const timeout = () => {
         
         //Map over all colors in the history array and display them in the historyBox
         historyBox.innerHTML = `<ul> ${historyArray.map((color, index) => `<li id='${index}' onclick=colorItemOnClick(this)>Red: ${color.red}, Green: ${color.green}, Blue: ${color.blue}`)} </ul>`
+
+        //Make sure buttons are displayed
+        startStopButton.classList.remove('invisible');
+        clearHistoryButton.classList.remove('invisible');
+        addToFavoritesButton.classList.remove('invisible');
+        clearFavoritesButton.classList.remove('invisible');
+        addCurrentToFavoritesButton.classList.remove('invisible');
 
         //Call timeout for for looping
         timeout()

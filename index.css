@@ -1,17 +1,39 @@
-body{
+body {
   display: flex;
   justify-content: center;
   align-items: center;
   height: 100vh;
   flex-direction: column;
 }
-h1 { 
+
+h1 {
   color: white;
   font-size: 48px;
 }
-.historyBox{
+
+.historyBox, .favoritesBox {
   width: 20vw;
   height: 20vh;
   background-color: white;
   overflow: scroll;
+  margin: 15px;
+}
+
+.invisible {
+  display: none;
+}
+
+.historyAndFavorites {
+  display: flex;
+}
+
+.historyContainer, .favoritesContainer {
+  display: flex;
+  flex-direction: column;
+}
+
+.historyButtonsContainer, .favoritesButtonsContainer {
+  display: flex;
+  justify-content: center;
+  margin: 10px;
 }
