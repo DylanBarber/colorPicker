@@ -62,6 +62,15 @@ changeColorTitleColor = (red, green, blue) => {
   }
 };
 
+//Re-render functions for historyBox and favoritesBox
+const renderHistory = () => {
+  historyBox.innerHTML = `<ul> ${historyArray.map((color, index) => `<li id='${index}' onclick=colorItemOnClick(this)>Red: ${color.red}, Green: ${color.green}, Blue: ${color.blue}`)} </ul>`;
+};
+
+const renderFavorites = () => {
+  favoritesBox.innerHTML = `<ul> ${favoritesArray.map((color, index) => `<li id='${index}' onclick=colorItemOnClick(this)>Red: ${color.red}, Green: ${color.green}, Blue: ${color.blue}`)} </ul>`;
+};
+
 //Event Listeners
 
 //For starting / stopping the color generation loop
@@ -79,8 +88,8 @@ startStopButton.addEventListener("click", () => {
 clearHistoryButton.addEventListener("click", () => {
   historyBox.innerHTML = "";
   historyArray = [];
-  prevItem = null; 
-  currentItem = null; 
+  prevItem = null;
+  currentItem = null;
 });
 
 //For adding the highlighted color from history to favorites
@@ -96,7 +105,7 @@ addToFavoritesButton.addEventListener("click", () => {
       blue
     });
     //Map over all colors in the favorites array and display them in the favoritesBox
-    favoritesBox.innerHTML = `<ul> ${favoritesArray.map((color, index) => `<li id='${index}' onclick=colorItemOnClick(this)>Red: ${color.red}, Green: ${color.green}, Blue: ${color.blue}`)} </ul>`;
+    renderFavorites(); 
   }
 });
 
@@ -107,7 +116,8 @@ clearFavoritesButton.addEventListener("click", () => {
 });
 
 addCurrentColorButton.addEventListener("click", () => {
-
+  favoritesArray.push(historyArray[historyArray.length - 1]);
+  renderFavorites();
 });
 
 //Main loop that will loop over newly generated colors
@@ -136,10 +146,10 @@ const timeout = () => {
       });
 
       //Map over all colors in the history array and display them in the historyBox
-      historyBox.innerHTML = `<ul> ${historyArray.map((color, index) => `<li id='${index}' onclick=colorItemOnClick(this)>Red: ${color.red}, Green: ${color.green}, Blue: ${color.blue}`)} </ul>`;
+      renderHistory();
 
       //Map over all colors in the favorites array and display them in the favoritesBox
-      favoritesBox.innerHTML = `<ul> ${favoritesArray.map((color, index) => `<li id='${index}' onclick=colorItemOnClick(this)>Red: ${color.red}, Green: ${color.green}, Blue: ${color.blue}`)} </ul>`;
+      renderFavorites();
 
       //Make sure buttons are displayed
       startStopButton.classList.remove("invisible");
