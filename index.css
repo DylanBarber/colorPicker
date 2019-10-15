@@ -1,3 +1,5 @@
+/* General Styling */
+
 body {
   display: flex;
   justify-content: center;
@@ -6,10 +8,38 @@ body {
   flex-direction: column;
 }
 
-h1 {
+button:hover {
+  box-shadow: 0px 0px 20px black;
+  filter: brightness(85%);
+}
+
+/* Class for making everything initial invisible until the first color is displayed */
+
+.invisible {
+  display: none !important;
+}
+
+/* General Styling */
+
+/* Title that displays the current color */
+
+#colorTitle {
   color: white;
   font-size: 48px;
 }
+
+/* Title that displays the current color */
+
+/* Start / Stop button */
+
+#startStop {
+  font-size: 32px;
+  border-radius: 15px;
+}
+
+/* Start / Stop button */
+
+/* History and Favorites Box */
 
 .historyBox, .favoritesBox {
   width: 20vw;
@@ -19,7 +49,7 @@ h1 {
   margin: 15px;
   border-radius: 20px;
   box-shadow: 0px 0px 10px grey;
-  justify-content: center; 
+  justify-content: center;
   display: flex;
 }
 
@@ -32,10 +62,6 @@ ul {
 
 ul li {
   text-align: center;
-}
-
-.invisible {
-  display: none;
 }
 
 .historyAndFavorites {
@@ -51,13 +77,13 @@ ul li {
   display: flex;
   justify-content: center;
 }
-#clearHistoryButton, #addToFavoritesButton, #clearFavoritesButton, #addCurrentColorButton{
+
+#clearHistoryButton, #addToFavoritesButton, #clearFavoritesButton, #addCurrentColorButton {
   margin: 10px;
 }
-button:hover{
-  box-shadow: 0px 0px 20px black;
-  filter: brightness(85%); 
-}
+
 .highlightedItem {
-  background-color: lightgray; 
+  background-color: lightgray;
 }
+
+/* History and Favorites Box */
