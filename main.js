@@ -105,7 +105,7 @@ addToFavoritesButton.addEventListener("click", () => {
       blue
     });
     //Map over all colors in the favorites array and display them in the favoritesBox
-    renderFavorites(); 
+    renderFavorites();
   }
 });
 
@@ -115,6 +115,7 @@ clearFavoritesButton.addEventListener("click", () => {
   favoritesArray = [];
 });
 
+//For adding current background color to the favoritesArray
 addCurrentColorButton.addEventListener("click", () => {
   favoritesArray.push(historyArray[historyArray.length - 1]);
   renderFavorites();
