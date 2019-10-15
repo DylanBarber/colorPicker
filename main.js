@@ -16,20 +16,24 @@ let currentItem = null;
 //For checking if DOM elements should be displayed or not. Displays DOM elements when first color is generated
 let appRan = false;
 const displayDOMOnStart = (appStarted) => {
+  loading.classList.add("invisible");
+  historyTitle.classList.remove("invisible");
+  favoritesTitle.classList.remove("invisible");
+  historyBox.classList.remove("invisible");
+  favoritesBox.classList.remove("invisible");
   startStopButton.classList.remove("invisible");
   clearHistoryButton.classList.remove("invisible");
   addToFavoritesButton.classList.remove("invisible");
   clearFavoritesButton.classList.remove("invisible");
   addCurrentColorButton.classList.remove("invisible");
-  historyBox.classList.remove("invisible");
-  favoritesBox.classList.remove("invisible");
-  loading.classList.add("invisible");
   appRan = true;
 };
 
 //DOM Elements
 const loading = document.getElementById("loading");
 const colorTitle = document.getElementById("colorTitle");
+const historyTitle = document.getElementById("historyTitle");
+const favoritesTitle = document.getElementById("favoritesTitle");
 const historyBox = document.getElementById("historyBox");
 const favoritesBox = document.getElementById("favoritesBox");
 const startStopButton = document.getElementById("startStop");
@@ -55,7 +59,7 @@ const colorItemOnClick = (e) => {
   const green = parseInt(currentItemTextArray[1].split(" ")[2]);
   const blue = parseInt(currentItemTextArray[2].split(" ")[2]);
   changeBgColor(red, green, blue);
-  changeColorTitleColor(red, green, blue);
+  changeTitleColor(red, green, blue);
   e.classList.add("highlightedItem");
   prevItem = e;
 };
@@ -70,11 +74,15 @@ const changeBgColor = (red, green, blue) => {
 };
 
 //Function that changes the color title to either black or white based on the current background color (Passed in color)
-const changeColorTitleColor = (red, green, blue) => {
+const changeTitleColor = (red, green, blue) => {
   if (red * 0.299 + green * 0.587 + blue * 0.114 > 186) {
     colorTitle.style.color = "#000000";
+    historyTitle.style.color = "#000000";
+    favoritesTitle.style.color = "#000000";
   } else {
     colorTitle.style.color = "#ffffff";
+    historyTitle.style.color = "#ffffff";
+    favoritesTitle.style.color = "#ffffff";
   }
 };
 
@@ -154,8 +162,8 @@ const mainLoop = () => {
       //Set background color based on generated values
       document.body.style.backgroundColor = `rgb(${red}, ${green}, ${blue})`;
 
-      //Change the colorTitle with changeColorTitleColor function
-      changeColorTitleColor(red, green, blue);
+      //Change the colorTitle with changeTitleColor function
+      changeTitleColor(red, green, blue);
 
       //Update the colorTitle with the current background color
       colorTitle.textContent = `Red: ${red}, Green: ${green}, Blue: ${blue}`;
