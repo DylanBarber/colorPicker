@@ -24,6 +24,7 @@ const displayDOMOnStart = (appStarted) => {
       addCurrentColorButton.classList.remove("invisible");
       historyBox.classList.remove("invisible");
       favoritesBox.classList.remove("invisible");
+      loading.classList.add("invisible");
     }
     if (runCounter !== 1){
       return runCounter = 1;
@@ -32,6 +33,7 @@ const displayDOMOnStart = (appStarted) => {
 };
 
 //DOM Elements
+const loading = document.getElementById("loading");
 const colorTitle = document.getElementById("colorTitle");
 const historyBox = document.getElementById("historyBox");
 const favoritesBox = document.getElementById("favoritesBox");
