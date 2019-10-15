@@ -17,6 +17,12 @@ h1 {
   background-color: white;
   overflow: scroll;
   margin: 15px;
+  border-radius: 20px;
+  box-shadow: 0px 0px 10px grey;
+}
+
+ul {
+  list-style: none;
 }
 
 .invisible {
@@ -35,5 +41,11 @@ h1 {
 .historyButtonsContainer, .favoritesButtonsContainer {
   display: flex;
   justify-content: center;
+}
+#clearHistoryButton, #addToFavoritesButton, #clearFavoritesButton, #addCurrentColorButton{
   margin: 10px;
+}
+button:hover{
+  box-shadow: 0px 0px 20px black;
+  filter: brightness(85%); 
 }

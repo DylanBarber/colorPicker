@@ -11,7 +11,7 @@ const startStopButton = document.getElementById('startStop');
 const clearHistoryButton = document.getElementById('clearHistoryButton');
 const addToFavoritesButton = document.getElementById('addToFavoritesButton');
 const clearFavoritesButton = document.getElementById('clearFavoritesButton');
-const addCurrentToFavoritesButton = document.getElementById('addCurrentToFavoritesButton');
+const addCurrentColorButton = document.getElementById('addCurrentColorButton');
 
 //Function to obtain random number from 0-255 for RGB values
 const getRandomNum = () => {
@@ -98,7 +98,7 @@ const timeout = () => {
         clearHistoryButton.classList.remove('invisible');
         addToFavoritesButton.classList.remove('invisible');
         clearFavoritesButton.classList.remove('invisible');
-        addCurrentToFavoritesButton.classList.remove('invisible');
+        addCurrentColorButton.classList.remove('invisible');
 
         //Call timeout for for looping
         timeout()
