@@ -83,23 +83,29 @@ clearHistoryButton.addEventListener('click', () => {
 
 //For adding the highlighted color from history to favorites
 addToFavoritesButton.addEventListener('click', () => {
-  // favoritesArray.push(currentItem);
-  const targetArr = currentItem.textContent.split(',')
-  const red = parseInt(targetArr[0].split(' ')[1]);
-  const green = parseInt(targetArr[1].split(' ')[2]);
-  const blue = parseInt(targetArr[2].split(' ')[2]);
-  favoritesArray.push({
-    red,
-    green,
-    blue
-  });
-  //Map over all colors in the favorites array and display them in the favoritesBox
-  favoritesBox.innerHTML = `<ul> ${favoritesArray.map((color, index) => `<li id='${index}' onclick=colorItemOnClick(this)>Red: ${color.red}, Green: ${color.green}, Blue: ${color.blue}`)} </ul>`
+  if (currentItem !== null) {
+    const targetArr = currentItem.textContent.split(',')
+    const red = parseInt(targetArr[0].split(' ')[1]);
+    const green = parseInt(targetArr[1].split(' ')[2]);
+    const blue = parseInt(targetArr[2].split(' ')[2]);
+    favoritesArray.push({
+      red,
+      green,
+      blue
+    });
+    //Map over all colors in the favorites array and display them in the favoritesBox
+    favoritesBox.innerHTML = `<ul> ${favoritesArray.map((color, index) => `<li id='${index}' onclick=colorItemOnClick(this)>Red: ${color.red}, Green: ${color.green}, Blue: ${color.blue}`)} </ul>`
+  }
 });
 
+//For clearing the favorites box and favoritesArray
 clearFavoritesButton.addEventListener('click', () => {
-  favoritesBox.innerHTML = ''; 
+  favoritesBox.innerHTML = '';
   favoritesArray = [];
+})
+
+addCurrentColorButton.addEventListener('click', () => {
+
 })
 
 //Main loop that will loop over newly generated colors
