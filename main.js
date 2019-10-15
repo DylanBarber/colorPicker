@@ -7,8 +7,8 @@ let historyArray = [];
 //Create array for favorites
 let favoritesArray = [];
 
-//prevTarget for highlighting rows in historyBox when clicked
-let prevTarget = null;
+//prevItem for highlighting rows in historyBox when clicked
+let prevItem = null;
 
 //for the current highlighted intem in historyBox
 let currentItem = null;
@@ -30,8 +30,8 @@ const getRandomNum = () => {
 
 //Function that obtains the color value of a clicked item in color list
 colorItemOnClick = (e) => {
-  if (prevTarget !== null) {
-    prevTarget.classList.remove("highlightedItem");
+  if (prevItem !== null) {
+    prevItem.classList.remove("highlightedItem");
   }
   currentItem = e;
   const targetContent = document.getElementById(`${e.id}`).textContent;
@@ -41,7 +41,7 @@ colorItemOnClick = (e) => {
   const blue = parseInt(targetArr[2].split(" ")[2]);
   changeBgColor(red, green, blue);
   e.classList.add("highlightedItem");
-  prevTarget = e;
+  prevItem = e;
 };
 
 //Function that changes the background color (Only used for colorItemOnClick because repeat is set to false)
@@ -79,6 +79,8 @@ startStopButton.addEventListener("click", () => {
 clearHistoryButton.addEventListener("click", () => {
   historyBox.innerHTML = "";
   historyArray = [];
+  prevItem = null; 
+  currentItem = null; 
 });
 
 //For adding the highlighted color from history to favorites
