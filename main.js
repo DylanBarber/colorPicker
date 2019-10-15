@@ -88,9 +88,14 @@ addToFavoritesButton.addEventListener('click', () => {
   const red = parseInt(targetArr[0].split(' ')[1]);
   const green = parseInt(targetArr[1].split(' ')[2]);
   const blue = parseInt(targetArr[2].split(' ')[2]);
-  console.log({red, green, blue})
+  favoritesArray.push({
+    red,
+    green,
+    blue
+  });
+  //Map over all colors in the favorites array and display them in the favoritesBox
+  favoritesBox.innerHTML = `<ul> ${favoritesArray.map((color, index) => `<li id='${index}' onclick=colorItemOnClick(this)>Red: ${color.red}, Green: ${color.green}, Blue: ${color.blue}`)} </ul>`
 });
-
 
 //Main loop that will loop over newly generated colors
 const timeout = () => {
