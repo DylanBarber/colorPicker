@@ -14,22 +14,17 @@ let prevItem = null;
 let currentItem = null;
 
 //For checking if DOM elements should be displayed or not. Displays DOM elements when first color is generated
-let runCounter = 0;
+let appRan = false;
 const displayDOMOnStart = (appStarted) => {
-    if (appStarted === true && runCounter === 0) {
-      startStopButton.classList.remove("invisible");
-      clearHistoryButton.classList.remove("invisible");
-      addToFavoritesButton.classList.remove("invisible");
-      clearFavoritesButton.classList.remove("invisible");
-      addCurrentColorButton.classList.remove("invisible");
-      historyBox.classList.remove("invisible");
-      favoritesBox.classList.remove("invisible");
-      loading.classList.add("invisible");
-    }
-    if (runCounter !== 1){
-      return runCounter = 1;
-    }
-    return;
+  startStopButton.classList.remove("invisible");
+  clearHistoryButton.classList.remove("invisible");
+  addToFavoritesButton.classList.remove("invisible");
+  clearFavoritesButton.classList.remove("invisible");
+  addCurrentColorButton.classList.remove("invisible");
+  historyBox.classList.remove("invisible");
+  favoritesBox.classList.remove("invisible");
+  loading.classList.add("invisible");
+  appRan = true;
 };
 
 //DOM Elements
@@ -49,7 +44,7 @@ const getRandomNum = () => {
 };
 
 //Function that obtains the color value of a clicked item in color list
-colorItemOnClick = (e) => {
+const colorItemOnClick = (e) => {
   if (prevItem !== null) {
     prevItem.classList.remove("highlightedItem");
   }
@@ -60,12 +55,13 @@ colorItemOnClick = (e) => {
   const green = parseInt(currentItemTextArray[1].split(" ")[2]);
   const blue = parseInt(currentItemTextArray[2].split(" ")[2]);
   changeBgColor(red, green, blue);
+  changeColorTitleColor(red, green, blue);
   e.classList.add("highlightedItem");
   prevItem = e;
 };
 
 //Function that changes the background color (Only used for colorItemOnClick because repeat is set to false)
-changeBgColor = (red, green, blue) => {
+const changeBgColor = (red, green, blue) => {
   if (repeat === true) {
     repeat = false;
   }
@@ -74,7 +70,7 @@ changeBgColor = (red, green, blue) => {
 };
 
 //Function that changes the color title to either black or white based on the current background color (Passed in color)
-changeColorTitleColor = (red, green, blue) => {
+const changeColorTitleColor = (red, green, blue) => {
   if (red * 0.299 + green * 0.587 + blue * 0.114 > 186) {
     colorTitle.style.color = "#000000";
   } else {
@@ -101,7 +97,6 @@ startStopButton.addEventListener("click", () => {
     return;
   }
   repeat = !repeat;
-
 });
 
 //For clearing the history box and historyArray
@@ -143,9 +138,12 @@ addCurrentColorButton.addEventListener("click", () => {
 
 //Main loop that will loop over newly generated colors
 const mainLoop = () => {
-  const changeColor = setTimeout(() => {
+  setTimeout(() => {
     //call displayDOMOnStart to display DOM elements
-    displayDOMOnStart(true);
+    if (!appRan) {
+      displayDOMOnStart(true);
+    }
+
 
     if (repeat === true) {
       //Generate new color values
