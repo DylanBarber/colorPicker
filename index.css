@@ -19,10 +19,19 @@ h1 {
   margin: 15px;
   border-radius: 20px;
   box-shadow: 0px 0px 10px grey;
+  justify-content: center; 
+  display: flex;
 }
 
 ul {
   list-style: none;
+  width: 100%;
+  padding: 0px;
+  margin: 10px;
+}
+
+ul li {
+  text-align: center;
 }
 
 .invisible {
@@ -48,4 +57,7 @@ ul {
 button:hover{
   box-shadow: 0px 0px 20px black;
   filter: brightness(85%); 
+}
+.highlightedItem {
+  background-color: lightgray; 
 }

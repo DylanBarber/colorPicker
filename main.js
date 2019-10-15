@@ -4,9 +4,14 @@ let repeat = true;
 //Create array for history tracking
 let historyArray = [];
 
+//Testing
+let prevTarget = null;
+
+
 //DOM Elements
 const colorTitle = document.getElementById('colorTitle');
 const historyBox = document.getElementById('historyBox');
+const favoritesBox = document.getElementById('favoritesBox');
 const startStopButton = document.getElementById('startStop');
 const clearHistoryButton = document.getElementById('clearHistoryButton');
 const addToFavoritesButton = document.getElementById('addToFavoritesButton');
@@ -15,22 +20,27 @@ const addCurrentColorButton = document.getElementById('addCurrentColorButton');
 
 //Function to obtain random number from 0-255 for RGB values
 const getRandomNum = () => {
-  return Math.round(Math.random() * 255)
-}
+  return Math.round(Math.random() * 255);
+};
 
 //Function that obtains the color value of a clicked item in color list
 colorItemOnClick = (e) => {
+  if (prevTarget !== null) {
+    prevTarget.classList.remove('highlightedItem');
+  }
   const targetContent = document.getElementById(`${e.id}`).textContent;
   const targetArr = targetContent.split(',')
   const red = parseInt(targetArr[0].split(' ')[1]);
   const green = parseInt(targetArr[1].split(' ')[2]);
   const blue = parseInt(targetArr[2].split(' ')[2]);
   changeBgColor(red, green, blue)
+  e.classList.add('highlightedItem');
+  prevTarget = e;
 }
 
 //Function that changes the background color (Only used for colorItemOnClick because repeat is set to false)
 changeBgColor = (red, green, blue) => {
-  if (repeat === true){
+  if (repeat === true) {
     repeat = false
   }
   document.body.style.backgroundColor = `rgb(${red}, ${green}, ${blue})`;
@@ -67,43 +77,45 @@ clearHistoryButton.addEventListener('click', () => {
 
 //Main loop that will loop over newly generated colors
 const timeout = () => {
-    const changeColor = setTimeout(() => {
-      if (repeat === true) {
-        //Generate new color values
-        const red = getRandomNum();
-        const green = getRandomNum();
-        const blue = getRandomNum();
+  const changeColor = setTimeout(() => {
+    if (repeat === true) {
+      //Generate new color values
+      const red = getRandomNum();
+      const green = getRandomNum();
+      const blue = getRandomNum();
 
-        //Set background color based on generated values
-        document.body.style.backgroundColor = `rgb(${red}, ${green}, ${blue})`;
+      //Set background color based on generated values
+      document.body.style.backgroundColor = `rgb(${red}, ${green}, ${blue})`;
 
-        //Change the colorTitle with changeColorTitleColor function
-        changeColorTitleColor(red, green, blue);
+      //Change the colorTitle with changeColorTitleColor function
+      changeColorTitleColor(red, green, blue);
 
-        //Update the colorTitle with the current background color
-        colorTitle.textContent = `Red: ${red}, Green: ${green}, Blue: ${blue}`;
+      //Update the colorTitle with the current background color
+      colorTitle.textContent = `Red: ${red}, Green: ${green}, Blue: ${blue}`;
 
-        //Push current color to the history array
-        historyArray.push({
-          red,
-          green,
-          blue
-        })
-        
-        //Map over all colors in the history array and display them in the historyBox
-        historyBox.innerHTML = `<ul> ${historyArray.map((color, index) => `<li id='${index}' onclick=colorItemOnClick(this)>Red: ${color.red}, Green: ${color.green}, Blue: ${color.blue}`)} </ul>`
+      //Push current color to the history array
+      historyArray.push({
+        red,
+        green,
+        blue
+      })
 
-        //Make sure buttons are displayed
-        startStopButton.classList.remove('invisible');
-        clearHistoryButton.classList.remove('invisible');
-        addToFavoritesButton.classList.remove('invisible');
-        clearFavoritesButton.classList.remove('invisible');
-        addCurrentColorButton.classList.remove('invisible');
+      //Map over all colors in the history array and display them in the historyBox
+      historyBox.innerHTML = `<ul> ${historyArray.map((color, index) => `<li id='${index}' onclick=colorItemOnClick(this)>Red: ${color.red}, Green: ${color.green}, Blue: ${color.blue}`)} </ul>`
 
-        //Call timeout for for looping
-        timeout()
-      }
-    }, 1500)
+      //Make sure buttons are displayed
+      startStopButton.classList.remove('invisible');
+      clearHistoryButton.classList.remove('invisible');
+      addToFavoritesButton.classList.remove('invisible');
+      clearFavoritesButton.classList.remove('invisible');
+      addCurrentColorButton.classList.remove('invisible');
+      historyBox.classList.remove('invisible');
+      favoritesBox.classList.remove('invisible');
+
+      //Call timeout for for looping
+      timeout()
+    }
+  }, 1500)
 }
 
 //Run timeout for the first time
