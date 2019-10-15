@@ -10,8 +10,26 @@ let favoritesArray = [];
 //prevItem for highlighting rows in historyBox when clicked
 let prevItem = null;
 
-//for the current highlighted intem in historyBox
+//For the current highlighted intem in historyBox
 let currentItem = null;
+
+//For checking if DOM elements should be displayed or not. Displays DOM elements when first color is generated
+let runCounter = 0;
+const displayDOMOnStart = (appStarted) => {
+    if (appStarted === true && runCounter === 0) {
+      startStopButton.classList.remove("invisible");
+      clearHistoryButton.classList.remove("invisible");
+      addToFavoritesButton.classList.remove("invisible");
+      clearFavoritesButton.classList.remove("invisible");
+      addCurrentColorButton.classList.remove("invisible");
+      historyBox.classList.remove("invisible");
+      favoritesBox.classList.remove("invisible");
+    }
+    if (runCounter !== 1){
+      return runCounter = 1;
+    }
+    return;
+};
 
 //DOM Elements
 const colorTitle = document.getElementById("colorTitle");
@@ -34,11 +52,11 @@ colorItemOnClick = (e) => {
     prevItem.classList.remove("highlightedItem");
   }
   currentItem = e;
-  const targetContent = document.getElementById(`${e.id}`).textContent;
-  const targetArr = targetContent.split(",");
-  const red = parseInt(targetArr[0].split(" ")[1]);
-  const green = parseInt(targetArr[1].split(" ")[2]);
-  const blue = parseInt(targetArr[2].split(" ")[2]);
+  const currentItemText = document.getElementById(`${e.id}`).textContent;
+  const currentItemTextArray = currentItemText.split(",");
+  const red = parseInt(currentItemTextArray[0].split(" ")[1]);
+  const green = parseInt(currentItemTextArray[1].split(" ")[2]);
+  const blue = parseInt(currentItemTextArray[2].split(" ")[2]);
   changeBgColor(red, green, blue);
   e.classList.add("highlightedItem");
   prevItem = e;
@@ -77,7 +95,7 @@ const renderFavorites = () => {
 startStopButton.addEventListener("click", () => {
   if (!repeat) {
     repeat = !repeat;
-    timeout();
+    mainLoop();
     return;
   }
   repeat = !repeat;
@@ -122,8 +140,11 @@ addCurrentColorButton.addEventListener("click", () => {
 });
 
 //Main loop that will loop over newly generated colors
-const timeout = () => {
+const mainLoop = () => {
   const changeColor = setTimeout(() => {
+    //call displayDOMOnStart to display DOM elements
+    displayDOMOnStart(true);
+
     if (repeat === true) {
       //Generate new color values
       const red = getRandomNum();
@@ -152,20 +173,11 @@ const timeout = () => {
       //Map over all colors in the favorites array and display them in the favoritesBox
       renderFavorites();
 
-      //Make sure buttons are displayed
-      startStopButton.classList.remove("invisible");
-      clearHistoryButton.classList.remove("invisible");
-      addToFavoritesButton.classList.remove("invisible");
-      clearFavoritesButton.classList.remove("invisible");
-      addCurrentColorButton.classList.remove("invisible");
-      historyBox.classList.remove("invisible");
-      favoritesBox.classList.remove("invisible");
-
-      //Call timeout for for looping
-      timeout();
+      //Call mainLoop for for looping
+      mainLoop();
     }
   }, 1500);
 };
 
-//Run timeout for the first time
-timeout();
+//Run mainLoop for the first time
+mainLoop();
