@@ -34,7 +34,8 @@ const displayDOMOnStart = (appStarted) => {
 
 //DOM Elements
 const loading = document.getElementById("loading");
-const colorTitle = document.getElementById("colorTitle");
+const RGBColorTitle = document.getElementById("RGBColorTitle");
+const hexColorTitle = document.getElementById("hexColorTitle");
 const historyTitle = document.getElementById("historyTitle");
 const favoritesTitle = document.getElementById("favoritesTitle");
 const historyBox = document.getElementById("historyBox");
@@ -50,6 +51,11 @@ const getRandomNum = () => {
   return Math.round(Math.random() * 255);
 };
 
+const changeColorTitlesText = (red, green, blue) => {
+  RGBColorTitle.textContent = `Red: ${red}, Green: ${green}, Blue: ${blue}`;
+  hexColorTitle.textContent = `Hex: ${rgbToHex(red, green, blue)}`; 
+};
+
 //Function that converts RGB to hex
 const rgbToHex = (red, green, blue) => {
   const convert = (color) => {
@@ -59,7 +65,8 @@ const rgbToHex = (red, green, blue) => {
     }
     return hex;
   };
-  console.log(convert(red), convert(green), convert(blue)); 
+  const hexValue = `#${convert(red)}${convert(green)}${convert(blue)}`;
+  return hexValue.toUpperCase();
 
 };
 
@@ -83,7 +90,6 @@ const colorItemOnClick = (e) => {
 const changeBgColor = (red, green, blue) => {
   document.body.style.backgroundColor = `rgb(${red}, ${green}, ${blue})`;
   rgbToHex(red, green, blue); 
-  colorTitle.textContent = `Red: ${red}, Green: ${green}, Blue: ${blue}`;
 };
 
 //Function that ends main loop
@@ -96,11 +102,13 @@ const endMainLoop = () => {
 //Function that changes the color title to either black or white based on the current background color (Passed in color)
 const changeTitleColor = (red, green, blue) => {
   if (red * 0.299 + green * 0.587 + blue * 0.114 > 186) {
-    colorTitle.style.color = "#000000";
+    RGBColorTitle.style.color = "#000000";
+    hexColorTitle.style.color = "#000000";
     historyTitle.style.color = "#000000";
     favoritesTitle.style.color = "#000000";
   } else {
-    colorTitle.style.color = "#ffffff";
+    RGBColorTitle.style.color = "#ffffff";
+    hexColorTitle.style.color = "#ffffff";
     historyTitle.style.color = "#ffffff";
     favoritesTitle.style.color = "#ffffff";
   }
@@ -182,11 +190,11 @@ const mainLoop = () => {
       //Set background color based on generated values
       changeBgColor(red, green, blue); 
 
-      //Change the colorTitle with changeTitleColor function
+      //Change the RGBColorTitle with changeTitleColor function
       changeTitleColor(red, green, blue);
 
-      //Update the colorTitle with the current background color
-      colorTitle.textContent = `Red: ${red}, Green: ${green}, Blue: ${blue}`;
+      //Update the RGBColorTitle with the current background color
+      changeColorTitlesText(red, green, blue);
 
       //Push current color to the history array
       historyArray.push({
