@@ -81,6 +81,7 @@ const colorItemOnClick = (e) => {
   const blue = currentItem.dataset.blue;
   endMainLoop();
   changeBgColor(red, green, blue);
+  currentColor = {red, green, blue};
   changeTitleColor(red, green, blue);
   e.classList.add("highlightedItem");
   prevItem = e;
@@ -114,13 +115,21 @@ const changeTitleColor = (red, green, blue) => {
   }
 };
 
+const foregroundTextColor = (red, green, blue) => {
+  if (red * 0.299 + green * 0.587 + blue * 0.114 > 186) {
+    return "#000000";
+  } else {
+    return "#ffffff";
+  }
+};
+
 //Re-render functions for historyBox and favoritesBox
 const renderHistory = () => {
-  historyBox.innerHTML = `<ul> ${historyArray.map((color, index) => `<li data-red=${color.red} data-green=${color.green} data-blue=${color.blue} id='${index}' onclick=colorItemOnClick(this)>Red: ${color.red}, Green: ${color.green}, Blue: ${color.blue}`)} </ul>`;
+  historyBox.innerHTML = `<ul> ${historyArray.map((color, index) => `<li style="background-color: rgb(${color.red},${color.green},${color.blue}); color: ${foregroundTextColor(color.red, color.green, color.blue)};" data-red=${color.red} data-green=${color.green} data-blue=${color.blue} id='${index}' onclick=colorItemOnClick(this)>Red: ${color.red}, Green: ${color.green}, Blue: ${color.blue}`)} </ul>`;
 };
 
 const renderFavorites = () => {
-  favoritesBox.innerHTML = `<ul> ${favoritesArray.map((color, index) => `<li data-red=${color.red} data-green=${color.green} data-blue=${color.blue} id='${index}' onclick=colorItemOnClick(this)>Red: ${color.red}, Green: ${color.green}, Blue: ${color.blue}`)} </ul>`;
+  favoritesBox.innerHTML = `<ul> ${favoritesArray.map((color, index) => `<li style="background-color: rgb(${color.red},${color.green},${color.blue}); color: ${foregroundTextColor(color.red, color.green, color.blue)};" data-red=${color.red} data-green=${color.green} data-blue=${color.blue} id='${index}' onclick=colorItemOnClick(this)>Red: ${color.red}, Green: ${color.green}, Blue: ${color.blue}`)} </ul>`;
 };
 
 //Event Listeners
@@ -179,7 +188,6 @@ const mainLoop = () => {
     if (!appRan) {
       displayDOMOnStart(true);
     }
-
 
     if (repeat === true) {
       //Generate new color values
