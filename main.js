@@ -56,11 +56,9 @@ const colorItemOnClick = (e) => {
     prevItem.classList.remove("highlightedItem");
   }
   currentItem = e;
-  const currentItemText = document.getElementById(`${e.id}`).textContent;
-  const currentItemTextArray = currentItemText.split(",");
-  const red = parseInt(currentItemTextArray[0].split(" ")[1]);
-  const green = parseInt(currentItemTextArray[1].split(" ")[2]);
-  const blue = parseInt(currentItemTextArray[2].split(" ")[2]);
+  const red = currentItem.dataset.red;
+  const green = currentItem.dataset.green;
+  const blue = currentItem.dataset.blue;
   changeBgColor(red, green, blue);
   changeTitleColor(red, green, blue);
   e.classList.add("highlightedItem");
@@ -91,11 +89,11 @@ const changeTitleColor = (red, green, blue) => {
 
 //Re-render functions for historyBox and favoritesBox
 const renderHistory = () => {
-  historyBox.innerHTML = `<ul> ${historyArray.map((color, index) => `<li id='${index}' onclick=colorItemOnClick(this)>Red: ${color.red}, Green: ${color.green}, Blue: ${color.blue}`)} </ul>`;
+  historyBox.innerHTML = `<ul> ${historyArray.map((color, index) => `<li data-red=${color.red} data-green=${color.green} data-blue=${color.blue} id='${index}' onclick=colorItemOnClick(this)>Red: ${color.red}, Green: ${color.green}, Blue: ${color.blue}`)} </ul>`;
 };
 
 const renderFavorites = () => {
-  favoritesBox.innerHTML = `<ul> ${favoritesArray.map((color, index) => `<li id='${index}' onclick=colorItemOnClick(this)>Red: ${color.red}, Green: ${color.green}, Blue: ${color.blue}`)} </ul>`;
+  favoritesBox.innerHTML = `<ul> ${favoritesArray.map((color, index) => `<li data-red=${color.red} data-green=${color.green} data-blue=${color.blue} id='${index}' onclick=colorItemOnClick(this)>Red: ${color.red}, Green: ${color.green}, Blue: ${color.blue}`)} </ul>`;
 };
 
 //Event Listeners
