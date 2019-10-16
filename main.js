@@ -50,6 +50,19 @@ const getRandomNum = () => {
   return Math.round(Math.random() * 255);
 };
 
+//Function that converts RGB to hex
+const rgbToHex = (red, green, blue) => {
+  const convert = (color) => {
+    let hex = Number(color).toString(16);
+    if (hex.length < 2) {
+      hex = "0" + hex;
+    }
+    return hex;
+  };
+  console.log(convert(red), convert(green), convert(blue)); 
+
+};
+
 //Function that obtains the color value of a clicked item in color list
 const colorItemOnClick = (e) => {
   if (prevItem !== null) {
@@ -59,6 +72,7 @@ const colorItemOnClick = (e) => {
   const red = currentItem.dataset.red;
   const green = currentItem.dataset.green;
   const blue = currentItem.dataset.blue;
+  endMainLoop();
   changeBgColor(red, green, blue);
   changeTitleColor(red, green, blue);
   e.classList.add("highlightedItem");
@@ -67,11 +81,16 @@ const colorItemOnClick = (e) => {
 
 //Function that changes the background color (Only used for colorItemOnClick because repeat is set to false)
 const changeBgColor = (red, green, blue) => {
+  document.body.style.backgroundColor = `rgb(${red}, ${green}, ${blue})`;
+  rgbToHex(red, green, blue); 
+  colorTitle.textContent = `Red: ${red}, Green: ${green}, Blue: ${blue}`;
+};
+
+//Function that ends main loop
+const endMainLoop = () => {
   if (repeat === true) {
     repeat = false;
   }
-  document.body.style.backgroundColor = `rgb(${red}, ${green}, ${blue})`;
-  colorTitle.textContent = `Red: ${red}, Green: ${green}, Blue: ${blue}`;
 };
 
 //Function that changes the color title to either black or white based on the current background color (Passed in color)
@@ -161,7 +180,7 @@ const mainLoop = () => {
       const blue = getRandomNum();
 
       //Set background color based on generated values
-      document.body.style.backgroundColor = `rgb(${red}, ${green}, ${blue})`;
+      changeBgColor(red, green, blue); 
 
       //Change the colorTitle with changeTitleColor function
       changeTitleColor(red, green, blue);
@@ -181,7 +200,7 @@ const mainLoop = () => {
         red,
         green,
         blue
-      }
+      };
 
       //Map over all colors in the history array and display them in the historyBox
       renderHistory();
