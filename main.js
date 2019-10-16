@@ -83,6 +83,7 @@ const colorItemOnClick = (e) => {
   changeBgColor(red, green, blue);
   currentColor = {red, green, blue};
   changeTitleColor(red, green, blue);
+  changeColorTitlesText(red, green, blue); 
   e.classList.add("highlightedItem");
   prevItem = e;
 };
