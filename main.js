@@ -13,6 +13,9 @@ let prevItem = null;
 //For the current highlighted intem in historyBox
 let currentItem = null;
 
+//For storage of the current color
+let currentColor = {};
+
 //For checking if DOM elements should be displayed or not. Displays DOM elements when first color is generated
 let appRan = false;
 const displayDOMOnStart = (appStarted) => {
@@ -140,7 +143,7 @@ clearFavoritesButton.addEventListener("click", () => {
 
 //For adding current background color to the favoritesArray
 addCurrentColorButton.addEventListener("click", () => {
-  favoritesArray.push(historyArray[historyArray.length - 1]);
+  favoritesArray.push(currentColor);
   renderFavorites();
 });
 
@@ -174,6 +177,13 @@ const mainLoop = () => {
         green,
         blue
       });
+
+      //Update currentColor with the current color
+      currentColor = {
+        red,
+        green,
+        blue
+      }
 
       //Map over all colors in the history array and display them in the historyBox
       renderHistory();
